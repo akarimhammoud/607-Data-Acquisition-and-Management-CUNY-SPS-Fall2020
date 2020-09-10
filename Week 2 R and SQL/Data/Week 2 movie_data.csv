@@ -1,0 +1,31 @@
+ID,People,Movie,Rating
+1,Alice,Frozen 2,5
+2,Tony,Frozen 2,4
+3,Zen,Frozen 2,5
+4,Majed,Frozen 2,NA
+5,Gary,Frozen 2,NA
+1,Alice,Murder Mystery,4
+2,Tony,Murder Mystery,3
+3,Zen,Murder Mystery,2
+4,Majed,Murder Mystery,5
+5,Gary,Murder Mystery,4
+1,Alice,Moana,5
+2,Tony,Moana,3
+3,Zen,Moana,5
+4,Majed,Moana,NA
+5,Gary,Moana,NA
+1,Alice,Joker,NA
+2,Tony,Joker,4
+3,Zen,Joker,5
+4,Majed,Joker,5
+5,Gary,Joker,4
+1,Alice,The Big Kick,3
+2,Tony,The Big Kick,NA
+3,Zen,The Big Kick,1
+4,Majed,The Big Kick,2
+5,Gary,The Big Kick,3
+1,Alice,Get out,4
+2,Tony,Get out,5
+3,Zen,Get out,5
+4,Majed,Get out,3
+5,Gary,Get out,3
