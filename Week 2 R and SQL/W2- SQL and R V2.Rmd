@@ -1,0 +1,123 @@
+---
+title: "Week 2 Assignment – SQL and R"
+author: "Karim Hammoud"
+date: "`r Sys.Date()`"
+output:
+   openintro::lab_report: default
+
+---
+
+## The Overview:
+
+The goal of this assignment is to create and analyze a survey of six movies and add the data to SQL database where we implement the data from a secure password host to the R markdown. the finding of this report is analyzing the movies and find out which one has the most rating.
+
+
+I conducted the survey by asking friends and coworkers about the six movies, some of them have seen most of the movies and some saw only few of the movies.
+
+I uploaded the files the Github and you can find the [Github](https://github.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/blob/master/Week%202%20R%20and%20SQL/Data/Week%202%20movie_data.csv)
+
+And you can check the files on 
+[Github](https://github.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/tree/master/Week%202%20R%20and%20SQL)
+
+And the [Rpubs](https://rpubs.com/karim7mod/658836)
+
+
+## Loading packages
+
+```{r load-packages, message=FALSE}
+library(RMySQL)
+library(ggplot2)
+library(dplyr)
+```
+
+## getting the row data for csv files saved in Github
+```{r}
+urlA <- "https://raw.githubusercontent.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/master/Week%202%20R%20and%20SQL/Data/Week%202%20movie_data.csv"
+
+urlB <- "https://raw.githubusercontent.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/master/Week%202%20R%20and%20SQL/Data/Week2_people.csv"
+ 
+rating <- read.csv(urlA, header = TRUE, sep = ",")
+rating
+
+people <- read.csv(urlB, header = TRUE, sep = ",")
+people
+```
+
+
+## Establish Connection
+
+Connect to MySql on Google Cloud host
+
+```{r}
+conn <- dbConnect(MySQL(),
+                 user="root", password= "dav",
+                 dbname="data607", host= "35.188.162.1")
+summary(conn)
+```
+
+
+## Creating Tables
+
+Creating table for rating and people on MySql
+
+```{r}
+dbWriteTable(conn, 'rating', rating, overwrite = TRUE)
+```
+
+Creating table for the people 
+
+```{r}
+dbWriteTable(conn, 'people', people, overwrite = TRUE)
+```
+
+### Check the tables in the database
+
+I will mainly use the movies database
+
+```{r}
+dbListTables(conn);
+```
+
+## Create join the tables using Query
+join the rating and people tables and getting the data
+
+```{r}
+data <- dbGetQuery(conn, 'select * from rating 
+                  inner join people on rating.ID = people.ID;')
+data
+```
+
+We get rid of the duplicate columns
+
+```{r}
+data <- data[, !duplicated(colnames(data))]
+data
+```
+
+Calculating the mean average of rating for the movies, and considering there are NA 
+```{r}
+movies <- subset(data, select = c(Frozen.2, Murder.Mystery, Moana, Joker, The.Big.Kick, Get.out))
+
+movies <- colMeans(movies, na.rm = TRUE, dims = 1)
+
+movies
+```
+
+
+
+## Display the data on a bar chart
+
+After pulling the average rating for each movie we present the data on the chart
+
+```{r}
+par(mar=c(5,2,2,0))
+
+barplot(movies, main="Movies Rating", xlab="Movies", ylim=c(0,6), horiz=FALSE,cex.lab=1 , col= c("lightcyan","mistyrose","beige","yellow","red","green"), names.arg=c("Frozen 2", "MurderMystery", "Moana", "Joker", "The Big Kick", "Get out" ))
+```
+
+## Conclusion:
+
+As we see in the barchart, the movies Frozen 2 and Joker got the highest average rating evethough Frozen2 had been watched only by 3 people, while Joker had been watched by all of the people in the rating list. on the other side The Big Sick movie got the worst rating of around only 2 out of 5 and it was watched by 4 people, it seems like they didn't enjoy it a lot.
+
+Thanks,
+Karim Hammoud
