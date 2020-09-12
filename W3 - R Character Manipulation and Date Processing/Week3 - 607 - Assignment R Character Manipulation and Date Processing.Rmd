@@ -1,0 +1,130 @@
+---
+title: "R Character Manipulation and Date Processing"
+author: "Karim Hammoud"
+date: "`r Sys.Date()`"
+output: openintro::lab_report
+---
+
+## The Overview:
+
+#1. Using the 173 majors listed in fivethirtyeight.com’s College Majors dataset [https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/], provide code that identifies the majors that contain either "DATA" or "STATISTICS"
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Loading the required library
+
+```{r}
+library(stringr)
+```
+
+
+### Getting the data from fivethirtyeight github
+
+```{r}
+url <- ("https://raw.githubusercontent.com/fivethirtyeight/data/master/college-majors/majors-list.csv")
+
+data <- read.csv(url, sep = ",")
+
+head(data)
+```
+
+### Getting the majors containing "DATA" 
+
+```{r}
+data$Major[grepl("DATA", data$Major)]
+```
+
+### Getting the majors containing "DATA" 
+
+```{r}
+data$Major[grepl("STATISTICS", data$Major)]
+```
+
+
+## 2 Write code that transforms the data below:
+
+[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange"
+
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+
+[9] "elderberry"   "lime"         "lychee"       "mulberry"    
+
+[13] "olive"        "salal berry"
+
+Into a format like this:
+
+c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+
+
+```{r}
+fruits <- '[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange"
+
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+
+[9] "elderberry"   "lime"         "lychee"       "mulberry"    
+
+[13] "olive"        "salal berry"'
+
+fruits
+```
+Here we use the str extract for all of the fruits then we join them with comma separator
+
+```{r warning = FALSE}
+fruits_string <- str_extract_all(fruits,pattern = '[A-Za-z]+.?[A-Za-z]+')
+
+fruits <- writeLines(str_c(fruits_string, collapse =", "))
+```
+
+
+The two exercises below are taken from R for Data Science, 14.3.5.1 in the on-line version:
+
+## 3 Describe, in words, what these expressions will match:
+
+**(.)\1\1**
+This is to get one character with two repetitions like "AAA".
+
+**"(.)(.)\\2\\1"**
+This is to get two characters repeated in a reverse way like "ABBA" 
+
+**(..)\1**
+This is to get two characters repeated like "ABAB"
+
+**"(.).\\1.\\1"**
+This is to get 5 characters and three of them are the same like "ABACA"
+
+**"(.)(.)(.).*\\3\\2\\1"**
+This is to get a number of characters begin and end with the same characters in a reverse way like "ABC42342CBA"
+
+
+
+## 4 Construct regular expressions to match words that:
+
+* Start and end with the same character.
+The answer: "(.).*\1"
+
+```{r}
+data <- c("church", "individual", "phillip")
+str_view(data, "^(.).*\\1$", match = TRUE)
+```
+
+
+* Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)
+The answer: "(..).*\\1"
+
+```{r}
+data <- c("church", "individual", "phillip")
+str_view(data, "^(..).*\\1$", match = TRUE)
+```
+
+
+* Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)
+The answer: "(.).*\\1.*\\1"
+
+```{r}
+data <- c("church", "individual", "phillip")
+str_view(data, "(.).*\\1.*\\1", match = TRUE)
+```
+...
