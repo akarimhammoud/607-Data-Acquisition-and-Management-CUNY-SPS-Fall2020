@@ -14,11 +14,13 @@ The goal of this assignment is to create and analyze a survey of six movies and 
 
 I conducted the survey by asking friends and coworkers about the six movies, some of them have seen most of the movies and some saw only few of the movies.
 
-I uploaded the files the Github and you can find the [data here](https://github.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/blob/master/Week%202%20R%20and%20SQL/Data/Week%202%20movie_data.csv)
+I uploaded the files the Github and you can find the [Github](https://github.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/blob/master/Week%202%20R%20and%20SQL/Data/Week%202%20movie_data.csv)
 
-And you can check the files on [Github](https://github.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/tree/master/Week%202%20R%20and%20SQL)
+And you can check the files on 
+[Github](https://github.com/akarimhammoud/607-Data-Acquisition-and-Management-CUNY-SPS-Fall2020/tree/master/Week%202%20R%20and%20SQL)
 
 And the [Rpubs](https://rpubs.com/karim7mod/658836)
+
 
 ## Loading packages
 
